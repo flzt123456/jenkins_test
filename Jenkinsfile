@@ -2,7 +2,7 @@ pipeline {
   agent {
     label {
       label "Built-In Node"
-      customWorkspace "/swpa/jenkins_test/"
+      customWorkspace "/home/swpa/jenkins_test/"
     }
   }
   stages {
@@ -12,7 +12,7 @@ pipeline {
                             "files": [
                                     {
                                         "pattern": "swpa/swpa/VD4224B/VD4224B-1.5.302.0.pkgtb",
-                                        "target": "/files"
+                                        "target": "files"
                                     }
                                 ]
                             }''')
