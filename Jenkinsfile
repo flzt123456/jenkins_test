@@ -1,9 +1,10 @@
 pipeline {
   agent {
-    label {
-      label "Built-In Node"
-      customWorkspace "/home/swpa/jenkins_test/"
+    node {
+      label 'Built-In Node'
+      customWorkspace '/home/swpa/jenkins_test/'
     }
+
   }
   stages {
     stage('Download file') {
@@ -17,9 +18,7 @@ pipeline {
                                 ]
                             }''')
         }
-     }
-   }
-}
-  
+      }
 
-     
+    }
+  }
