@@ -1,45 +1,25 @@
 pipeline {
-  agent any
-  stages {
-    stage('Clone') {
-      steps {
-        git(branch: 'master', url: 'https://github.com/jfrog/project-examples.git')
-        input(message: 'Please Input Model Name', id: 'Model')
-      }
+  agent {
+    label {
+      label "Built-In Node"
+      customWorkspace "/swpa/jenkins_test/"
     }
-
-    stage('Upload file') {
+  }
+  stages {
+    stage('Download file') {
       steps {
-        rtUpload(serverId: SERVER_ID, spec: '''{
+        rtDownload(serverId: swpa_test, spec: '''{
                             "files": [
                                     {
-                                        "pattern": "jenkins-examples/pipeline-examples/resources/ArtifactoryPipeline.zip",
-                                        "target": "libs-snapshot-local"
+                                        "pattern": "swpa/swpa/VD4224B/VD4224B-1.5.302.0.pkgtb",
+                                        "target": "/files"
                                     }
                                 ]
                             }''')
         }
-      }
+     }
+   }
+}
+  
 
-      stage('Publish build info') {
-        steps {
-          rtPublishBuildInfo SERVER_ID
-        }
-      }
-
-      stage('Set output resources') {
-        steps {
-          jfPipelines(outputResources: """[
-                                    {
-                                          "name": "pipelinesBuildInfo",
-                                          "content": {
-                                                "buildName": "${env.JOB_NAME}",
-                                                "buildNumber": "${env.BUILD_NUMBER}"
-                                            }
-                                        }
-                                    ]""")
-              }
-            }
-
-          }
-        }
+     
